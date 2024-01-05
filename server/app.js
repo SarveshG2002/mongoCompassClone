@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, '../views'));
 
 // Serve static files from the 'public' folder (if needed)
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 
@@ -122,7 +122,7 @@ app.post('/getCollectionByDatabase', async (req, res) => {
         const databaseName = req.body.dbname;
 
         if (!databaseName) {
-            return res.status(400).json({ error: 'Database name is missing in the query parameters.' });
+            return res.status(400).json({ error: 'Database name is missing in the request body.' });
         }
 
         const database = mongoose.connection.useDb(databaseName);
@@ -136,6 +136,29 @@ app.post('/getCollectionByDatabase', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
+app.post('/getCollectionByDatabaseSidebarPage', async (req, res) => {
+    try {
+        const databaseName = req.body.dbname;
+
+        if (!databaseName) {
+            return res.status(400).json({ error: 'Database name is missing in the request body.' });
+        }
+
+        const database = mongoose.connection.useDb(databaseName);
+        await database.modelNames();
+        const collections = await database.db.listCollections().toArray();
+        const collectionNames = collections.map(collection => collection.name);
+
+        // res.json({ collections: collectionNames });
+        res.render("sidebarcollections", { collectionNames });
+    } catch (error) {
+        logger.error('Error getting collection list by database:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 app.post('/createCollection', async (req, res) => {
     try {

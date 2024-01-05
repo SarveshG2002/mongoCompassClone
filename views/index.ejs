@@ -118,7 +118,40 @@
       </div>
       <div class="allDatabases" id="allDatabases">
 
-        
+        <div class="databases">
+          <span class="material-symbols-outlined" onclick="showCollectionInSideBar('1', this)">
+              chevron_right
+          </span>
+          hello
+          <div class="left">
+              <span class="material-symbols-outlined left">
+                  add
+              </span>
+              <span class="material-symbols-outlined">
+                  delete
+              </span>
+          </div>
+      </div>
+      <div>
+        <div class="collections" id="collectionDiv1">
+          
+          &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;collection1
+          <div class="left">
+              <span class="material-symbols-outlined">
+                  delete
+              </span>
+          </div>
+      </div>
+      <div class="collections" id="collectionDiv1">
+          
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;collection1
+        <div class="left">
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </div>
+    </div>
+      </div>
 
       </div>
 
@@ -133,6 +166,7 @@
     }
 
     function showCollectionInSideBar(id, selfele) {
+      console.log(id)
       let ele = document.getElementById(`collectionDiv${id}`);
       // Make an AJAX request using jQuery
       if (ele.style.display == "") {
@@ -140,20 +174,20 @@
         selfele.innerHTML = "chevron_right";
       } else {
         $.ajax({
-          url: 'http://localhost:3000/getAllDatabaseList',  // Replace with your server-side endpoint
-          type: 'GET',
+          url: 'http://localhost:3000/getCollectionByDatabaseSidebarPage',
+          type: 'POST',
+          data: { dbname: id }, // This will send data in the request body
           success: function (data) {
-            // Handle the successful response
-            // $('#result').html(data);
-            console.log(data)
-            ele.style.display = "";
-            selfele.innerHTML = "expand_more";
+              console.log(data);
+              document.getElementById(`collectionDiv${id}`).innerHTML=data;
+              ele.style.display = "";
+              selfele.innerHTML = "expand_more";
           },
           error: function (xhr, status, error) {
-            // Handle errors
-            console.error('Error:', status, error);
+              console.error('Error:', status, error);
           }
-        });
+      });
+
       }
 
 
