@@ -68,6 +68,34 @@ app.all('/getAllDatabaseList', async (req, res) => {
 });
 
 
+
+// Assuming you've already set up your Express app and MongoDB connection
+
+app.get('/getAllDatabaseListSidebarPage', async (req, res) => {
+    try {
+        const adminDb = mongoose.connection.useDb('admin');
+        const databaseList = await adminDb.db.admin().listDatabases();
+        const adminDatabaseExists = databaseList.databases.some(db => db.name === 'admin');
+
+        if (!adminDatabaseExists) {
+            await adminDb.createCollection('dummyCollection');
+        }
+
+        const allDbList = await mongoose.connection.db.admin().listDatabases();
+        const databaseNames = allDbList.databases.map(db => db.name);
+
+        // Render the 'sidebardatabases' page with the database names
+        res.render("sidebardatabases", { databaseNames });
+        // res.json(databaseNames);
+    } catch (error) {
+        console.error('Error getting database list:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
 app.get('/getAllDatabaseListWithCollections', async (req, res) => {
     try {
         const adminDb = mongoose.connection.useDb('admin');

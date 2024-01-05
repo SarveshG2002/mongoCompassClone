@@ -1,0 +1,28 @@
+
+
+<% databaseNames.forEach(function(dbName) { %>
+    <div class="databases">
+        <span class="material-symbols-outlined" onclick="showCollectionInSideBar('<%= dbName %>', this)">
+            chevron_right
+        </span>
+        <%= dbName %>
+        <div class="left">
+            <span class="material-symbols-outlined left">
+                add
+            </span>
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </div>
+    </div>
+    <div class="collections" id="collectionDiv<%= dbName %>" style="display:none">
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;collection1
+        <div class="left">
+            <span class="material-symbols-outlined">
+                delete
+            </span>
+        </div>
+    </div>
+<% }); %>
+
+
