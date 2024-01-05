@@ -107,7 +107,7 @@
         </span>
         DataBases
         <div class="left">
-          <span class="material-symbols-outlined left">
+          <span class="material-symbols-outlined left" id="fetchDatabase">
             refresh
           </span>
           <span class="material-symbols-outlined left">
@@ -202,19 +202,26 @@
       // Attach a click event to the button
 
       // Make an AJAX request using jQuery
-      $.ajax({
-        url: 'http://localhost:3000/getAllDatabaseListSidebarPage',  // Replace with your server-side endpoint
-        type: 'GET',
-        success: function (data) {
-          // Handle the successful response
-          $('#allDatabases').html(data);
-          console.log(data);
-        },
-        error: function (xhr, status, error) {
-          // Handle errors
-          console.error('Error:', status, error);
-        }
-      });
+      $('#fetchDatabase').click(function() {
+        $.ajax({
+          url: 'http://localhost:3000/getAllDatabaseListSidebarPage',  // Replace with your server-side endpoint
+          type: 'GET',
+          success: function (data) {
+            // Handle the successful response
+            $('#allDatabases').html(data);
+            // console.log(data);
+            console.log('database fetch successfulyy');
+          },
+          error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', status, error);
+          }
+        });
+
+      })
+
+      document.getElementById('fetchDatabase').click();
+      
 
     });
   </script>
