@@ -186,15 +186,27 @@ app.post('/createDatabaseAndCollection', async (req, res) => {
             return res.status(400).json({ error: 'Database name and collection name are required in the request body.' });
         }
 
-        const newDbConnection = mongoose.createConnection(`mongodb://localhost:${databaseport}/${dbname}`, { useNewUrlParser: true, useUnifiedTopology: true });
-        await newDbConnection.db.createCollection(collectionname);
+        // Connect to MongoDB with the default connection (mongoose.connection)
+        await mongoose.connect(`mongodb://localhost:${databaseport}/${dbname}`, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+
+        // Access the default connection's db object and create the collection
+        const db = mongoose.connection.db;
+        await db.createCollection(collectionname);
 
         res.json({ success: true, message: `Database '${dbname}' and collection '${collectionname}' created` });
     } catch (error) {
         logger.error('Error creating database and collection:', error);
         res.status(500).send('Internal Server Error');
+    } finally {
+        // Close the connection after creating the collection
+        mongoose.connection.close();
     }
 });
+
+
 
 app.post('/connectToHost', (req, res) => {
     res.json({ success: true });
