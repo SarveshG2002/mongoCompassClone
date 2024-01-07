@@ -208,7 +208,7 @@
     <div class="modal-content">
       <div class="modal-head collections">
         <!-- Create Database<span class="close" id="closeModalBtn">&times;</span> -->
-        <h1>Create Database</h1>
+        <h1 id="modalHead">Create Database</h1>
         <div class="left">
           <span class="close" id="closeModalBtn">&times;</span>
 
@@ -316,6 +316,8 @@
             // $('#allDatabases').html(data);
             // console.log(data);
             // console.log('database fetch successfulyy');
+            modal.css('display', 'none');
+            overlay.css('display', 'none');
             $('#fetchDatabase').click();
           },
           error: function (xhr, status, error) {
@@ -329,12 +331,17 @@
       document.getElementById('fetchDatabase').click();
         var openModalBtn = $('#openModalBtn');
         var closeModalBtn = $('#closeModalBtn');
+
         var modal = $('#myModal');
         var overlay = $('#overlay');
+        
+        // var modalHead= $('#modalHead')
 
         openModalBtn.on('click', function () {
+          document.getElementById('modalHead').innerHTML="Create Database";
           modal.css('display', 'block');
           overlay.css('display', 'block');
+          
         });
 
         closeModalBtn.on('click', function () {
@@ -350,7 +357,20 @@
           }
         });
 
+        
+
       });
+
+      function openCollectionModal(database){
+        var modal = $('#myModal');
+        var overlay = $('#overlay');
+          document.getElementById('modalHead').innerHTML="Create Collection";
+          $("#newDatabaseName").val(database)
+          modal.css('display', 'block');
+          overlay.css('display', 'block');
+        }
+
+      
 
       
 
