@@ -219,7 +219,7 @@
         <div class="input">
           <label for="newDatabaseNAme">Database Name</label>
           <br>
-          <input type="text" id="newDatabaseNAme">
+          <input type="text" id="newDatabaseName">
         </div>
 
         <div class="input">
@@ -229,7 +229,7 @@
         </div>
 
         <div class="input">
-          <button style="float:right;margin-right: 0px; background-color: green;color: white;">
+          <button style="float:right;margin-right: 0px; background-color: green;color: white;" id="createDatabase">
             Create Database
         </button>
           <button style="float:right; margin-right: 10px;" onclick="$('#closeModalBtn').click()">
@@ -304,6 +304,28 @@
 
       })
 
+      $('#createDatabase').click(function () {
+        let databaseName=$("#newDatabaseName").val()
+        let collectionName=$("#newCollectionName").val()
+        $.ajax({
+          url: 'http://localhost:3000/createDatabaseAndCollection',  // Replace with your server-side endpoint
+          type: 'POST',
+          data: {dbname:databaseName,collectionname:collectionName},
+          success: function (data) {
+            // Handle the successful response
+            // $('#allDatabases').html(data);
+            // console.log(data);
+            // console.log('database fetch successfulyy');
+            $('#fetchDatabase').click();
+          },
+          error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', status, error);
+          }
+        });
+
+      })
+
       document.getElementById('fetchDatabase').click();
         var openModalBtn = $('#openModalBtn');
         var closeModalBtn = $('#closeModalBtn');
@@ -329,6 +351,8 @@
         });
 
       });
+
+      
 
 
     document.addEventListener('DOMContentLoaded', function () {
