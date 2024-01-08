@@ -5,7 +5,7 @@
         <span class="material-symbols-outlined" onclick="showCollectionInSideBar('<%= dbName %>', this)">
             chevron_right
         </span>
-        <%= dbName %>
+        <span style="cursor: pointer;" onclick="showCollectioninPanel('<%= dbName %>')"><%= dbName %></span>
         <div class="left">
             <span class="material-symbols-outlined left" onclick="openCollectionModal('<%= dbName %>')">
                 add
