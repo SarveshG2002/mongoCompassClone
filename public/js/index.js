@@ -34,7 +34,24 @@ function showCollectioninPanel(dbname){
 
 
 $(document).ready(function () {
-    // Attach a click event to the button
+    // Attach a click event to the 
+    
+    $.ajax({
+        url: `${url}getCollectionMetadataByDatabase`,  // Replace with your server-side endpoint
+        type: 'POST',
+        data: {'dbname':'designio'},
+        success: function (data) {
+            // Handle the successful response
+            // $('#allDatabases').html(data);
+
+            console.log(data);
+            // console.log('database fetch successfulyy');
+        },
+        error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', status, error);
+        }
+    });
 
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {

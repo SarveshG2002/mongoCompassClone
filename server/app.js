@@ -140,6 +140,44 @@ app.post('/getCollectionByDatabase', async (req, res) => {
     }
 });
 
+app.post('/getCollectionMetadataByDatabase', async (req, res) => {
+    try {
+        const databaseName = req.body.dbname;
+
+        if (!databaseName) {
+            return res.status(400).json({ error: 'Database name is missing in the request body.' });
+        }
+
+        const database = mongoose.connection.useDb(databaseName);
+
+        const collections = await database.db.listCollections().toArray();
+        const collectionMetadata = [];
+
+        for (const collection of collections) {
+            const stats = await database.db.command({ collStats: collection.name });
+
+            const metadata = {
+                name: collection.name,
+                size: stats.size,
+                documentCount: stats.count,
+                storageSize: stats.storageSize,
+            };
+
+            collectionMetadata.push(metadata);
+        }
+
+        res.json({ collections: collectionMetadata });
+    } catch (error) {
+        console.error('Error getting collection metadata by database:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+
+
+
+
 
 app.post('/getCollectionByDatabaseSidebarPage', async (req, res) => {
     try {
@@ -213,6 +251,7 @@ app.post('/createDatabaseAndCollection', async (req, res) => {
 app.post('/connectToHost', (req, res) => {
     res.json({ success: true });
 });
+console.log(`MongoDB Node.js driver version: ${require('mongodb/package.json').version}`);
 
 // Start the server
 app.listen(PORT, () => {
