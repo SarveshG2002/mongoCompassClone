@@ -43,6 +43,22 @@ mongoose.connect(`mongodb://localhost:${databaseport}/${tempDatabase}`, { useNew
         logger.error('Error connecting to MongoDB:', error);
     });
 
+
+// helpers
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(k)));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(decimals)) + ' ' + sizes[i];
+}
+
+
+
 // Render index.ejs when a request is made to the root route
 app.get('/', (req, res) => {
   res.render('index');
@@ -188,7 +204,8 @@ app.post('/getMainCollectionPage', async (req, res) => {
 
         for (const collection of collections) {
             const stats = await database.db.command({ collStats: collection.name });
-
+            // console.log(stats);
+            // console.log('\n\n\n\n\n\n\n\n\n\n');
             const metadata = {
                 name: collection.name,
                 size: stats.size,
@@ -200,7 +217,7 @@ app.post('/getMainCollectionPage', async (req, res) => {
         }
 
         // res.json({ collections: collectionMetadata });
-        res.render("mainCollections", { collectionMetadata });
+        res.render("mainCollections", { collectionMetadata,formatBytes  });
 
     } catch (error) {
         console.error('Error getting collection metadata by database:', error);

@@ -1,53 +1,52 @@
 <!-- mainCollections.ejs -->
 
-<% collectionMetadata.forEach((collection) => { %>
+<% collectionMetadata.forEach((collection)=> { %>
     <div class="mainCollection">
-      <div class="collectionName">
-        <%= collection.name %> 
-        <div class="left">
-          <span class="material-symbols-outlined left">
-            delete
-          </span>
+        <div class="collectionName">
+            <%= collection.name %>
+                <div class="left">
+                    <span class="material-symbols-outlined left">
+                        delete
+                    </span>
+                </div>
         </div>
-      </div>
-      <div class="collectionMetaData">
-        <div class="hello">
-          <b>
-            Storage Size:
-          </b>
-          <br>
-          <%= collection.storageSize %>
+        <div class="collectionMetaData">
+            <div class="hello">
+                <b>
+                    Storage Size:
+                </b>
+                <br>
+                <%= collection.storageSize %>
+            </div>
+            <div class="hello">
+                <b>
+                    Documents:
+                </b>
+                <br>
+                <%= collection.documentCount %>
+            </div>
+            <div class="hello">
+                <b>
+                    Avg. Doc. Size
+                </b>
+                <br>
+                1234.567
+            </div>
+            <div class="hello">
+                <b>
+                    Indexes
+                </b>
+                <br>
+                1234.567
+            </div>
+            <div class="hello">
+                <b>
+                    Total Index Size:
+                </b>
+                <br>
+                1234.567
+            </div>
+            <!-- Add more metadata fields as needed -->
         </div>
-        <div class="hello">
-          <b>
-            Documents:
-          </b>
-          <br>
-          <%= collection.documentCount %>
-        </div>
-        <div class="hello">
-            <b>
-              Avg. Doc. Size
-            </b>
-            <br>
-            1234.567
-          </div>
-          <div class="hello">
-            <b>
-              Indexes
-            </b>
-            <br>
-            1234.567
-          </div>
-          <div class="hello">
-            <b>
-              Total Index Size:
-            </b>
-            <br>
-            1234.567
-          </div>
-        <!-- Add more metadata fields as needed -->
-      </div>
     </div>
-  <% }); %>
-  
+<% }); %>

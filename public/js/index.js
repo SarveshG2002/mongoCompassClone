@@ -28,23 +28,15 @@ function showCollectionInSideBar(id, selfele) {
 }
 
 function showCollectioninPanel(dbname){
-
-}
-
-
-
-$(document).ready(function () {
-    // Attach a click event to the 
-    
     $.ajax({
         url: `${url}getMainCollectionPage`,  // Replace with your server-side endpoint
         type: 'POST',
-        data: {'dbname':'designio'},
+        data: {'dbname':dbname},
         success: function (data) {
             // Handle the successful response
-            // $('#allDatabases').html(data);
+            $('#mainBody').html(data);
 
-            console.log(data);
+            // console.log(data);
             // console.log('database fetch successfulyy');
         },
         error: function (xhr, status, error) {
@@ -52,6 +44,14 @@ $(document).ready(function () {
             console.error('Error:', status, error);
         }
     });
+}
+
+
+
+$(document).ready(function () {
+    // Attach a click event to the 
+    
+   
 
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {
