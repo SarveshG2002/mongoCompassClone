@@ -188,3 +188,8 @@
   margin-left: auto;
   /* Align the span to the right */
 }
+
+.mainContainer .mainBody .mainCollection .collectionMetaData{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+}

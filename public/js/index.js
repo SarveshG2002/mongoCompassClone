@@ -37,7 +37,7 @@ $(document).ready(function () {
     // Attach a click event to the 
     
     $.ajax({
-        url: `${url}getCollectionMetadataByDatabase`,  // Replace with your server-side endpoint
+        url: `${url}getMainCollectionPage`,  // Replace with your server-side endpoint
         type: 'POST',
         data: {'dbname':'designio'},
         success: function (data) {
