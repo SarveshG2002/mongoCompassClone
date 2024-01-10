@@ -27,6 +27,8 @@ function showCollectionInSideBar(id, selfele) {
 
 }
 
+
+
 function showCollectioninPanel(dbname){
     $.ajax({
         url: `${url}getMainCollectionPage`,  // Replace with your server-side endpoint
@@ -34,9 +36,26 @@ function showCollectioninPanel(dbname){
         data: {'dbname':dbname},
         success: function (data) {
             // Handle the successful response
-            $('#mainBody').html(data);
+            $('#mainContainer').html(data);
 
             // console.log(data);
+            // console.log('database fetch successfulyy');
+        },
+        error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', status, error);
+        }
+    });
+}
+
+function showDatabasePanel(){
+    $.ajax({
+        url: `${url}getMainDatabasePage`,  // Replace with your server-side endpoint
+        type: 'GET',
+        success: function (data) {
+            // Handle the successful response
+            $('#mainContainer').html(data);
+            console.log(data);
             // console.log('database fetch successfulyy');
         },
         error: function (xhr, status, error) {
@@ -50,8 +69,8 @@ function showCollectioninPanel(dbname){
 
 $(document).ready(function () {
     // Attach a click event to the 
+    showDatabasePanel();
     
-   
 
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {

@@ -111,7 +111,44 @@ app.get('/getAllDatabaseListSidebarPage', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+app.get('/getMainDatabasePage', async (req, res) => {
+    try {
+        // Fetch the list of databases
+        const adminDb = mongoose.connection.useDb('admin');
+        const databaseList = await adminDb.db.admin().listDatabases();
+        const adminDatabaseExists = databaseList.databases.some(db => db.name === 'admin');
 
+        if (!adminDatabaseExists) {
+            await adminDb.createCollection('dummyCollection');
+        }
+
+        const allDbList = await mongoose.connection.db.admin().listDatabases();
+        const databaseNames = allDbList.databases.map(db => db.name);
+
+        // Fetch metadata for each database
+        const databaseMetadata = [];
+
+        for (const dbName of databaseNames) {
+            const database = mongoose.connection.useDb(dbName);
+            const dbStats = await database.db.command({ dbStats: 1 });
+            const collections = await database.db.listCollections().toArray();
+            
+            databaseMetadata.push({
+                name: dbName,
+                totalStorageSize: dbStats.dataSize,
+                totalCollections: collections.length,
+            });
+        }
+
+        // Render the mainDatabases view with database metadata and formatBytes
+        res.render('mainDatabase', { databaseMetadata, formatBytes });
+        // res.json(databaseMetadata);
+
+    } catch (error) {
+        console.error('Error getting database list:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 
@@ -171,6 +208,7 @@ app.post('/getCollectionMetadataByDatabase', async (req, res) => {
 
         for (const collection of collections) {
             const stats = await database.db.command({ collStats: collection.name });
+            console.log(stats);
 
             const metadata = {
                 name: collection.name,

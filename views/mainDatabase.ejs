@@ -1,8 +1,9 @@
 <!-- mainCollections.ejs -->
+
 <div class="mainNavbar">
     <div class="input">
         <button style="margin-right: 0px; background-color: green;color: white;">
-            Create Collection
+            Create Database
         </button>
 
         <button style="margin-right: 0px;">
@@ -12,8 +13,8 @@
     </div>
 </div>
 <div class="mainBody">
-    <% collectionMetadata.forEach((collection)=> { %>
-        <div class="mainCollection">
+    <% databaseMetadata.forEach((collection)=> { %>
+        <div class="mainCollection" onclick="showCollectioninPanel('<%= collection.name %>')" style="cursor: pointer;">
             <div class="collectionName">
                 <%= collection.name %>
                     <div class="left">
@@ -28,36 +29,16 @@
                         Storage Size:
                     </b>
                     <br>
-                    <%= collection.storageSize %> B
+                    <%= collection.totalStorageSize %> B
                 </div>
                 <div class="hello">
                     <b>
-                        Documents:
+                        Collection:
                     </b>
                     <br>
-                    <%= collection.documentCount %>
+                    <%= collection.totalCollections %>
                 </div>
-                <div class="hello">
-                    <b>
-                        Avg. Doc. Size
-                    </b>
-                    <br>
-                    1234.567
-                </div>
-                <div class="hello">
-                    <b>
-                        Indexes
-                    </b>
-                    <br>
-                    1234.567
-                </div>
-                <div class="hello">
-                    <b>
-                        Total Index Size:
-                    </b>
-                    <br>
-                    1234.567
-                </div>
+
                 <!-- Add more metadata fields as needed -->
             </div>
         </div>
