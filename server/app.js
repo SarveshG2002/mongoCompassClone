@@ -249,13 +249,14 @@ app.post('/getMainCollectionPage', async (req, res) => {
                 size: stats.size,
                 documentCount: stats.count,
                 storageSize: stats.storageSize,
+
             };
 
             collectionMetadata.push(metadata);
         }
 
         // res.json({ collections: collectionMetadata });
-        res.render("mainCollections", { collectionMetadata,formatBytes  });
+        res.render("mainCollections", { collectionMetadata,formatBytes,databaseName  });
 
     } catch (error) {
         console.error('Error getting collection metadata by database:', error);

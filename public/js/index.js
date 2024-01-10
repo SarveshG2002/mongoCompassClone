@@ -55,7 +55,7 @@ function showDatabasePanel(){
         success: function (data) {
             // Handle the successful response
             $('#mainContainer').html(data);
-            console.log(data);
+            // console.log(data);
             // console.log('database fetch successfulyy');
         },
         error: function (xhr, status, error) {
@@ -106,6 +106,7 @@ $(document).ready(function () {
                 modal.css('display', 'none');
                 overlay.css('display', 'none');
                 $('#fetchDatabase').click();
+                openCollectionModal(databaseName)
             },
             error: function (xhr, status, error) {
                 // Handle errors
@@ -125,9 +126,7 @@ $(document).ready(function () {
     // var modalHead= $('#modalHead')
 
     openModalBtn.on('click', function () {
-        document.getElementById('modalHead').innerHTML = "Create Database";
-        modal.css('display', 'block');
-        overlay.css('display', 'block');
+        openCreateDatabaseModal();
 
     });
 
@@ -145,6 +144,14 @@ $(document).ready(function () {
     });
 
 });
+
+function openCreateDatabaseModal(){
+    let modal = $('#myModal');
+    let overlay = $('#overlay');
+    document.getElementById('modalHead').innerHTML = "Create Database";
+    modal.css('display', 'block');
+    overlay.css('display', 'block');
+}
 
 function openCollectionModal(database) {
     var modal = $('#myModal');
