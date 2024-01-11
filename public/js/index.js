@@ -1,4 +1,4 @@
-var url=(new URL(window.location.href)).origin+"/";
+var url = (new URL(window.location.href)).origin + "/";
 
 function showCollectionInSideBar(id, selfele) {
     // console.log(id)
@@ -29,11 +29,11 @@ function showCollectionInSideBar(id, selfele) {
 
 
 
-function showCollectioninPanel(dbname){
+function showCollectioninPanel(dbname) {
     $.ajax({
         url: `${url}getMainCollectionPage`,  // Replace with your server-side endpoint
         type: 'POST',
-        data: {'dbname':dbname},
+        data: { 'dbname': dbname },
         success: function (data) {
             // Handle the successful response
             $('#mainContainer').html(data);
@@ -48,7 +48,7 @@ function showCollectioninPanel(dbname){
     });
 }
 
-function showDatabasePanel(){
+function showDatabasePanel() {
     $.ajax({
         url: `${url}getMainDatabasePage`,  // Replace with your server-side endpoint
         type: 'GET',
@@ -70,7 +70,7 @@ function showDatabasePanel(){
 $(document).ready(function () {
     // Attach a click event to the 
     showDatabasePanel();
-    
+
 
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {
@@ -145,7 +145,7 @@ $(document).ready(function () {
 
 });
 
-function openCreateDatabaseModal(){
+function openCreateDatabaseModal() {
     let modal = $('#myModal');
     let overlay = $('#overlay');
     document.getElementById('modalHead').innerHTML = "Create Database";
@@ -160,4 +160,26 @@ function openCollectionModal(database) {
     $("#newDatabaseName").val(database)
     modal.css('display', 'block');
     overlay.css('display', 'block');
+}
+
+function showAllDataOfCollection(dbname, collectionname) {
+    $.ajax({
+        url: `${url}getAllDocumentsByDatabaseAndCollection`,  // Replace with your server-side endpoint
+        type: 'POST',
+        data: { dbname: dbname, clname: collectionname },
+        success: function (data) {
+            // Handle the successful response
+            // $('#allDatabases').html(data);
+            console.log(data);
+            // console.log('database fetch successfulyy');
+            // modal.css('display', 'none');
+            // overlay.css('display', 'none');
+            // $('#fetchDatabase').click();
+            // openCollectionModal(databaseName)
+        },
+        error: function (xhr, status, error) {
+            // Handle errors
+            console.error('Error:', status, error);
+        }
+    });
 }

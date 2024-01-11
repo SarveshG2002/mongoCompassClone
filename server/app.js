@@ -193,6 +193,28 @@ app.post('/getCollectionByDatabase', async (req, res) => {
     }
 });
 
+app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
+    try {
+        const { dbname, clname } = req.body;
+
+        if (!dbname || !clname) {
+            return res.status(400).json({ error: 'Database name and collection name are required in the request body.' });
+        }
+
+        const database = mongoose.connection.useDb(dbname);
+        const collection = database.collection(clname);
+
+        const documents = await collection.find({}).toArray();
+
+        res.json({ documents });
+
+    } catch (error) {
+        console.error('Error getting all documents:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
 app.post('/getCollectionMetadataByDatabase', async (req, res) => {
     try {
         const databaseName = req.body.dbname;

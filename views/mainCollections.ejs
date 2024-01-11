@@ -13,7 +13,7 @@
 </div>
 <div class="mainBody">
     <% collectionMetadata.forEach((collection)=> { %>
-        <div class="mainCollection">
+        <div class="mainCollection" onclick="showAllDataOfCollection('<%= databaseName %>','<%= collection.name %>')" style="cursor: pointer;">
             <div class="collectionName">
                 <%= collection.name %>
                     <div class="left">
