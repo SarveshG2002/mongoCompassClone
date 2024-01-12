@@ -162,11 +162,11 @@ function openCollectionModal(database) {
     overlay.css('display', 'block');
 }
 
-function showAllDataOfCollection(dbname, collectionname) {
+function showAllDataOfCollection(dbname, collectionname,rowCount=10) {
     $.ajax({
         url: `${url}getAllDocumentsByDatabaseAndCollection`,  // Replace with your server-side endpoint
         type: 'POST',
-        data: { dbname: dbname, clname: collectionname },
+        data: { dbname: dbname, clname: collectionname,rowCount:rowCount },
         success: function (data) {
             // Handle the successful response
             // $('#allDatabases').html(data);

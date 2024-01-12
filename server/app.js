@@ -201,23 +201,30 @@ app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
             return res.status(400).json({ error: 'Database name and collection name are required in the request body.' });
         }
 
-        if (!rowCount) {
+        // If rowCount is an empty string, set it to null to indicate no limit
+        if (rowCount == 'All') {
+            rowCount = 'All';
+        } else if (!rowCount) {
+            // If rowCount is not found, default it to 10
             rowCount = 10;
         }
 
         const database = mongoose.connection.useDb(dbname);
         const collection = database.collection(clname);
 
-        const documents = await collection.find({}).limit(parseInt(rowCount)).toArray();
+        // If rowCount is not null, apply the limit in the MongoDB query
+        const documents = rowCount !== "All" ? await collection.find({}).limit(parseInt(rowCount)).toArray() : await collection.find({}).toArray();
 
         // res.json({ documents,rowCount });
-        res.render("documentsPage", { documents,rowCount  });
+        res.render("documentsPage", { documents, rowCount, dbname,clname });
 
     } catch (error) {
         console.error('Error getting all documents:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
+
 
 
 
