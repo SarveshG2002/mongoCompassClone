@@ -49,20 +49,18 @@
 <!-- documentsPage.ejs -->
 
 <div class="mainBody">
-    <% if (documents.length===0) { %>
+    <% if (documents.length === 0) { %>
         <p>Collection is empty</p>
-        <% } else { %>
-            <% documents.forEach((document)=> { %>
+    <% } else { %>
+        <% documents.forEach((document, index) => { %>
+            <div>
+                <%= index + 1 %>) <!-- Add 1 to make it 1-based index -->
                 <div class="document">
-                    <% Object.keys(document).forEach((key)=> { %>
-                        <span>
-                            <%= key %>:
-                        </span><span>
-                            <%= document[key] %>
-                        </span>
-                        <br>
-                        <% }); %>
+                    <% Object.keys(document).forEach((key) => { %>
+                        <span><%= key %>: </span><span><%= document[key] %></span><br>
+                    <% }); %>
                 </div>
-                <% }); %>
-                    <% } %>
+            </div>
+        <% }); %>
+    <% } %>
 </div>

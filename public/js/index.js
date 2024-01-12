@@ -69,7 +69,7 @@ function showDatabasePanel() {
 
 $(document).ready(function () {
     // Attach a click event to the 
-    // showDatabasePanel();
+    showDatabasePanel();
 
     // showAllDataOfCollection()
     // Make an AJAX request using jQuery
