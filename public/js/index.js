@@ -69,9 +69,9 @@ function showDatabasePanel() {
 
 $(document).ready(function () {
     // Attach a click event to the 
-    showDatabasePanel();
+    // showDatabasePanel();
 
-
+    // showAllDataOfCollection()
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {
         $.ajax({
@@ -171,6 +171,7 @@ function showAllDataOfCollection(dbname, collectionname) {
             // Handle the successful response
             // $('#allDatabases').html(data);
             console.log(data);
+            $('#mainContainer').html(data);
             // console.log('database fetch successfulyy');
             // modal.css('display', 'none');
             // overlay.css('display', 'none');

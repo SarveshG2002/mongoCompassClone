@@ -195,24 +195,30 @@ app.post('/getCollectionByDatabase', async (req, res) => {
 
 app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
     try {
-        const { dbname, clname } = req.body;
+        let { dbname, clname, rowCount } = req.body;
 
         if (!dbname || !clname) {
             return res.status(400).json({ error: 'Database name and collection name are required in the request body.' });
         }
 
+        if (!rowCount) {
+            rowCount = 10;
+        }
+
         const database = mongoose.connection.useDb(dbname);
         const collection = database.collection(clname);
 
-        const documents = await collection.find({}).toArray();
+        const documents = await collection.find({}).limit(parseInt(rowCount)).toArray();
 
-        res.json({ documents });
+        // res.json({ documents,rowCount });
+        res.render("documentsPage", { documents,rowCount  });
 
     } catch (error) {
         console.error('Error getting all documents:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 app.post('/getCollectionMetadataByDatabase', async (req, res) => {
@@ -306,7 +312,7 @@ app.post('/getCollectionByDatabaseSidebarPage', async (req, res) => {
         const collectionNames = collections.map(collection => collection.name);
 
         // res.json({ collections: collectionNames });
-        res.render("sidebarcollections", { collectionNames });
+        res.render("sidebarcollections", { collectionNames,databaseName });
     } catch (error) {
         logger.error('Error getting collection list by database:', error);
         res.status(500).send('Internal Server Error');

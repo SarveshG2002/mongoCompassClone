@@ -3,7 +3,7 @@
 
 
 <% collectionNames.forEach(function(collectionName) { %>
-    <div class="collections">
+    <div class="collections" onclick="showAllDataOfCollection('<%= databaseName %>','<%= collectionName %>')" style="cursor: pointer;">
         &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<%= collectionName %>
         <div class="left">
             <span class="material-symbols-outlined">

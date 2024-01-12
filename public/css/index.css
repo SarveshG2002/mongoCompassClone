@@ -194,3 +194,14 @@
   display: grid;
   grid-template-columns: auto auto auto auto auto;
 }
+
+.document{
+  width: 100%;
+  background-color: #f5fffb;
+  padding: 10px 100px;
+  box-sizing: border-box;
+  border: 0.1px grey solid;
+  border-radius: 5px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}

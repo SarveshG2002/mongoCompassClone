@@ -1,0 +1,32 @@
+<div class="mainNavbar">
+    <div class="input">
+        <button style="margin-right: 0px; background-color: green;color: white;">
+            Add new Document
+        </button>
+
+        <button style="margin-right: 0px;">
+            Refresh
+        </button>
+
+    </div>
+
+    <div class="input">
+        <input type="number" placeholder="Row Count" value="<%= rowCount %>"
+            style="width: 20%;min-width: 100px;font-size: 15px;border-radius: 5px;">
+
+
+
+    </div>
+</div>
+<!-- documentsPage.ejs -->
+
+<div class="mainBody">
+    <% documents.forEach((document) => { %>
+        <div class="document">
+            <% Object.keys(document).forEach((key) => { %>
+                <span><%= key %>: </span><span><%= document[key] %></span>
+                <br>
+            <% }); %>
+        </div>
+    <% }); %>
+</div>
