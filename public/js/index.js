@@ -162,15 +162,30 @@ function openCollectionModal(database) {
     overlay.css('display', 'block');
 }
 
-function showAllDataOfCollection(dbname, collectionname,rowCount=10) {
+function showAllDataOfCollection(dbname, collectionname) {
+    // console.log(rowCount,qsort)
+    let rowCount=$('#rowCountSelect').val();
+    if(!rowCount){
+        rowCount=10
+    }
+    let qsort = $('#quicksort').prop('checked');
+console.log(rowCount, qsort);
+
+    if(!qsort){
+        qsort=0;
+    }else{
+        qsort=1;
+    }
+    console.log(rowCount,qsort)
+    // debugger
     $.ajax({
         url: `${url}getAllDocumentsByDatabaseAndCollection`,  // Replace with your server-side endpoint
         type: 'POST',
-        data: { dbname: dbname, clname: collectionname,rowCount:rowCount },
+        data: { dbname: dbname, clname: collectionname,rowCount:rowCount,qsort:qsort},
         success: function (data) {
             // Handle the successful response
             // $('#allDatabases').html(data);
-            console.log(data);
+            // console.log(data);
             $('#mainContainer').html(data);
             // console.log('database fetch successfulyy');
             // modal.css('display', 'none');

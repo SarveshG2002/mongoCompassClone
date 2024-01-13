@@ -195,7 +195,7 @@ app.post('/getCollectionByDatabase', async (req, res) => {
 
 app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
     try {
-        let { dbname, clname, rowCount } = req.body;
+        let { dbname, clname, rowCount, qsort } = req.body;
 
         if (!dbname || !clname) {
             return res.status(400).json({ error: 'Database name and collection name are required in the request body.' });
@@ -209,20 +209,40 @@ app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
             rowCount = 10;
         }
 
+        // If qsort is not provided, default it to 0
+        if (!qsort) {
+            qsort = 0;
+        }
+
         const database = mongoose.connection.useDb(dbname);
         const collection = database.collection(clname);
 
         // If rowCount is not null, apply the limit in the MongoDB query
-        const documents = rowCount !== "All" ? await collection.find({}).limit(parseInt(rowCount)).toArray() : await collection.find({}).toArray();
+        let documents;
+        if (rowCount !== "All") {
+            documents = await collection.find({}).limit(parseInt(rowCount));
+        } else {
+            documents = await collection.find({});
+        }
 
-        // res.json({ documents,rowCount });
-        res.render("documentsPage", { documents, rowCount, dbname,clname });
+        // Sort by _id in descending order if qsort is 1
+        console.log('qsort',qsort,qsort==1)
+        if (qsort == 1) {
+            console.log('sorting');
+            documents = documents.sort({ _id: -1 });
+        }
+
+        // Convert documents to array
+        documents = await documents.toArray();
+
+        res.render("documentsPage", { documents, rowCount, dbname, clname , qsort });
 
     } catch (error) {
         console.error('Error getting all documents:', error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 
