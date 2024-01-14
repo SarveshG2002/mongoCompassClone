@@ -4,7 +4,7 @@
             Add new Document
         </button>
 
-        <button style="margin-right: 0px;">
+        <button style="margin-right: 0px;" onclick="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')">
             Refresh
         </button>
         <div class="head" style="color:green">
@@ -43,6 +43,13 @@
 
         <label for="quicksort" style="margin-left: 20px;">Quick Sort</label>
         <input type="checkbox" onclick="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')" id="quicksort" <%= (qsort == 1) ? 'checked' : '' %> style="width: fit-content; font-size: 15px; border-radius: 5px;">
+
+        <div class="sortingdiv">
+            <label for="">Sort on field: </label> <input type="text" id="sortBy" value="" style="font-size: 15px;margin: 0px;border-radius: 10px 0px 0px 10px;"> <select name="" id="sortOrder" style="display: inline;border-radius: 0px 10px 10px 0px;">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+        </div>
 
     </div>
 </div>

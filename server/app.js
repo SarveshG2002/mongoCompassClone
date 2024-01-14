@@ -226,9 +226,9 @@ app.post('/getAllDocumentsByDatabaseAndCollection', async (req, res) => {
         }
 
         // Sort by _id in descending order if qsort is 1
-        console.log('qsort',qsort,qsort==1)
+        // console.log('qsort',qsort,qsort==1)
         if (qsort == 1) {
-            console.log('sorting');
+            // console.log('sorting');
             documents = documents.sort({ _id: -1 });
         }
 

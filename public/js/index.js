@@ -30,6 +30,7 @@ function showCollectionInSideBar(id, selfele) {
 
 
 function showCollectioninPanel(dbname) {
+    $('#mainContainer').html("Loading....");
     $.ajax({
         url: `${url}getMainCollectionPage`,  // Replace with your server-side endpoint
         type: 'POST',
@@ -49,6 +50,7 @@ function showCollectioninPanel(dbname) {
 }
 
 function showDatabasePanel() {
+    $('#mainContainer').html("Loading....");
     $.ajax({
         url: `${url}getMainDatabasePage`,  // Replace with your server-side endpoint
         type: 'GET',
@@ -74,6 +76,7 @@ $(document).ready(function () {
     // showAllDataOfCollection()
     // Make an AJAX request using jQuery
     $('#fetchDatabase').click(function () {
+        // $('#mainContainer').html("Loading....");
         $.ajax({
             url: `${url}getAllDatabaseListSidebarPage`,  // Replace with your server-side endpoint
             type: 'GET',
@@ -163,21 +166,23 @@ function openCollectionModal(database) {
 }
 
 function showAllDataOfCollection(dbname, collectionname) {
+    
     // console.log(rowCount,qsort)
     let rowCount=$('#rowCountSelect').val();
     if(!rowCount){
         rowCount=10
     }
     let qsort = $('#quicksort').prop('checked');
-console.log(rowCount, qsort);
+// console.log(rowCount, qsort);
 
     if(!qsort){
         qsort=0;
     }else{
         qsort=1;
     }
-    console.log(rowCount,qsort)
+    // console.log(rowCount,qsort)
     // debugger
+    $('#mainContainer').html("Loading....");
     $.ajax({
         url: `${url}getAllDocumentsByDatabaseAndCollection`,  // Replace with your server-side endpoint
         type: 'POST',
