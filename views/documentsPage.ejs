@@ -87,15 +87,66 @@
 
         </div>
       </div>
-      <div class="body">
+      <div class="body documentTable">
 
-        
+        <table id="keyValueTable">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="key1"></td>
+                    <td><input type="text" name="value1"></td>
+                    <td>
+                        <button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>
+                        <button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="key2"></td>
+                    <td><input type="text" name="value2"></td>
+                    <td>
+                        <button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>
+                        <button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                <!-- ... other rows ... -->
+            </tbody>
+        </table>
+    
+        <script>
+            function addRow(button) {
+                var table = document.getElementById("keyValueTable");
+                var rowIndex = button.parentNode.parentNode.rowIndex;
+                var newRow = table.insertRow(rowIndex + 1);
+    
+                // Add input cells
+                var keyCell = newRow.insertCell(0);
+                var valueCell = newRow.insertCell(1);
+                var actionCell = newRow.insertCell(2);
+    
+                keyCell.innerHTML = '<input type="text" name="newKey">';
+                valueCell.innerHTML = '<input type="text" name="newValue">';
+                actionCell.innerHTML = '<button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>' +
+                                        '<button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>';
+            }
+    
+            function deleteRow(button) {
+                var table = document.getElementById("keyValueTable");
+                var rowIndex = button.parentNode.parentNode.rowIndex;
+                table.deleteRow(rowIndex);
+            }
+        </script>
 
         <div class="input">
-          <button style="float:right;margin-right: 0px; background-color: green;color: white;" id="createDatabase">
+          <button style="float:right;margin-right: 0px; background-color: green;color: white;" id="">
             Create Database
           </button>
-          <button style="float:right; margin-right: 10px;" onclick="$('#closeModalBtn').click()">
+          <button style="float:right; margin-right: 10px;" onclick="$('#closedocumentModalBtn').click()">
             Cancel
           </button>
 
