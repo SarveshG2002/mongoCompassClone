@@ -18,7 +18,7 @@ const logger = winston.createLogger({
         new winston.transports.File({ filename: 'error.log', level: 'error' })
     ]
 });
-
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '../public')));
 console.log(path.join(__dirname, '../public'));
@@ -386,6 +386,17 @@ app.post('/createDatabaseAndCollection', async (req, res) => {
         await newDb.createCollection(collectionname);
 
         res.send(`New database "${dbname}" and collection "${collectionname}" created successfully`);
+    } catch (error) {
+        console.error('Error creating database and collection:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.post('/addDocument', async (req, res) => {
+    try {
+        console.log(req.body);
+
+        res.send(JSON.stringify(req.body));
     } catch (error) {
         console.error('Error creating database and collection:', error);
         res.status(500).send('Internal Server Error');

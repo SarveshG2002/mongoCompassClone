@@ -8,12 +8,15 @@
             Refresh
         </button>
         <div class="head" style="color:green">
-            <h1>db.<%=dbname%>.<%=clname%></h1>
+            <h1>db.<%=dbname%>.<%=clname%>
+            </h1>
         </div>
 
     </div>
     <div class="input">
-        <select name="rowCountSelect" id="rowCountSelect" style="width: 20%;min-width: 100px;font-size: 15px;border-radius: 5px;" onchange="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')">
+        <select name="rowCountSelect" id="rowCountSelect"
+            style="width: 20%;min-width: 100px;font-size: 15px;border-radius: 5px;"
+            onchange="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')">
             <option value="1" <%=rowCount==1 ? 'selected' : '' %>>
                 1
             </option>
@@ -42,10 +45,13 @@
         </select>
 
         <label for="quicksort" style="margin-left: 20px;">Quick Sort</label>
-        <input type="checkbox" onclick="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')" id="quicksort" <%= (qsort == 1) ? 'checked' : '' %> style="width: fit-content; font-size: 15px; border-radius: 5px;">
+        <input type="checkbox" onclick="showAllDataOfCollection('<%=dbname%>', '<%=clname%>')" id="quicksort"
+            <%=(qsort==1) ? 'checked' : '' %> style="width: fit-content; font-size: 15px; border-radius: 5px;">
 
         <div class="sortingdiv">
-            <label for="">Sort on field: </label> <input type="text" id="sortBy" value="" style="font-size: 15px;margin: 0px;border-radius: 10px 0px 0px 10px;"> <select name="" id="sortOrder" style="display: inline;border-radius: 0px 10px 10px 0px;">
+            <label for="">Sort on field: </label> <input type="text" id="sortBy" value=""
+                style="font-size: 15px;margin: 0px;border-radius: 10px 0px 0px 10px;"> <select name="" id="sortOrder"
+                style="display: inline;border-radius: 0px 10px 10px 0px;">
                 <option value="asc">Ascending</option>
                 <option value="desc">Descending</option>
             </select>
@@ -58,102 +64,115 @@
 <!-- documentsPage.ejs -->
 
 <div class="mainBody">
-    <% if (documents.length === 0) { %>
+    <% if (documents.length===0) { %>
         <p>Collection is empty</p>
-    <% } else { %>
-        <% documents.forEach((document, index) => { %>
-            <div>
-                <%= index + 1 %>) <!-- Add 1 to make it 1-based index -->
-                <div class="document">
-                    <% Object.keys(document).forEach((key) => { %>
-                        <span><%= key %>: </span><span><%= document[key] %></span><br>
-                    <% }); %>
+        <% } else { %>
+            <% documents.forEach((document, index)=> { %>
+                <div>
+                    <%= index + 1 %>) <!-- Add 1 to make it 1-based index -->
+                        <div class="document">
+                            <% Object.keys(document).forEach((key)=> { %>
+                                <span>
+                                    <%= key %>:
+                                </span><span>
+                                    <%= document[key] %>
+                                </span><br>
+                                <% }); %>
+                        </div>
                 </div>
-            </div>
-        <% }); %>
-    <% } %>
+                <% }); %>
+                    <% } %>
 </div>
 
 
 <div class="overlay" id="documentoverlay"></div>
 
-  <div class="modal" id="documentModal">
+<div class="modal" id="documentModal">
     <div class="modal-content">
-      <div class="modal-head collections">
-        <!-- Create Database<span class="close" id="closeModalBtn">&times;</span> -->
-        <h1 id="modalHead">Create Database</h1>
-        <div class="left">
-          <span class="close" id="closedocumentModalBtn">&times;</span>
+        <div class="modal-head collections">
+            <!-- Create Database<span class="close" id="closeModalBtn">&times;</span> -->
+            <h1 id="modalHead">Create Database</h1>
+            <div class="left">
+                <span class="close" id="closedocumentModalBtn">&times;</span>
+
+            </div>
+        </div>
+        <div class="body">
+            <form action="" id="documentForm">
+                <div class="documentTable">
+                    <table id="keyValueTable">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="key"></td>
+                                <td><input type="text" name="value"></td>
+                                <td>
+                                    <button type="button" class="add-button" onclick="addRow(this)"><i
+                                            class="fas fa-plus"></i></button>
+                                    <button type="button" class="delete-button" onclick="deleteRow(this)"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="documentKey" name="key"></td>
+                                <td><input type="text" class="" name="value"></td>
+                                <td>
+                                    <button type="button" class="add-button" onclick="addRow(this)"><i
+                                            class="fas fa-plus"></i></button>
+                                    <button type="button" class="delete-button" onclick="deleteRow(this)"><i
+                                            class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+
+                            <!-- ... other rows ... -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <script>
+                    function addRow(button) {
+                        var table = document.getElementById("keyValueTable");
+                        var rowIndex = button.parentNode.parentNode.rowIndex;
+                        var newRow = table.insertRow(rowIndex + 1);
+
+                        // Add input cells
+                        var keyCell = newRow.insertCell(0);
+                        var valueCell = newRow.insertCell(1);
+                        var actionCell = newRow.insertCell(2);
+
+                        keyCell.innerHTML = '<input type="text" name="key[]">';
+                        valueCell.innerHTML = '<input type="text" name="value[]">';
+                        actionCell.innerHTML = '<button type="button" class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>' +
+                            '<button  type="button" class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>';
+                    }
+
+                    function deleteRow(button) {
+                        var table = document.getElementById("keyValueTable");
+                        var rowIndex = button.parentNode.parentNode.rowIndex;
+                        table.deleteRow(rowIndex);
+                    }
+                </script>
+
+                <div class="input">
+                    <button type="button" style="float:right;margin-right: 0px; background-color: green;color: white;" id="" onclick="addDocument()">
+                        Add Data
+                    </button>
+                    <button type="button" style="float:right; margin-right: 10px;" onclick="$('#closedocumentModalBtn').click()">
+                        Cancel
+                    </button>
+
+                </div>
+            </form>
+
+
+            <br>
 
         </div>
-      </div>
-      <div class="body documentTable">
-
-        <table id="keyValueTable">
-            <thead>
-                <tr>
-                    <th>Key</th>
-                    <th>Value</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" name="key1"></td>
-                    <td><input type="text" name="value1"></td>
-                    <td>
-                        <button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>
-                        <button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" name="key2"></td>
-                    <td><input type="text" name="value2"></td>
-                    <td>
-                        <button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>
-                        <button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
-                <!-- ... other rows ... -->
-            </tbody>
-        </table>
-    
-        <script>
-            function addRow(button) {
-                var table = document.getElementById("keyValueTable");
-                var rowIndex = button.parentNode.parentNode.rowIndex;
-                var newRow = table.insertRow(rowIndex + 1);
-    
-                // Add input cells
-                var keyCell = newRow.insertCell(0);
-                var valueCell = newRow.insertCell(1);
-                var actionCell = newRow.insertCell(2);
-    
-                keyCell.innerHTML = '<input type="text" name="newKey">';
-                valueCell.innerHTML = '<input type="text" name="newValue">';
-                actionCell.innerHTML = '<button class="add-button" onclick="addRow(this)"><i class="fas fa-plus"></i></button>' +
-                                        '<button class="delete-button" onclick="deleteRow(this)"><i class="fas fa-trash"></i></button>';
-            }
-    
-            function deleteRow(button) {
-                var table = document.getElementById("keyValueTable");
-                var rowIndex = button.parentNode.parentNode.rowIndex;
-                table.deleteRow(rowIndex);
-            }
-        </script>
-
-        <div class="input">
-          <button style="float:right;margin-right: 0px; background-color: green;color: white;" id="">
-            Create Database
-          </button>
-          <button style="float:right; margin-right: 10px;" onclick="$('#closedocumentModalBtn').click()">
-            Cancel
-          </button>
-
-        </div>
-
-        <br>
-
-      </div>
     </div>
-  </div>
+</div>

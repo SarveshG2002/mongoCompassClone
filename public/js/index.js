@@ -148,14 +148,14 @@ $(document).ready(function () {
 
 });
 
-function openDocumentModal(){
+function openDocumentModal() {
     let modal = $('#documentModal');
     let overlay = $('#documentoverlay');
     // document.getElementById('modalHead').innerHTML = "Create Database";
     modal.css('display', 'block');
     overlay.css('display', 'block');
-    let closedocumentModalBtn = $("#closedocumentModalBtn"); 
-    closedocumentModalBtn.on("click",function(){
+    let closedocumentModalBtn = $("#closedocumentModalBtn");
+    closedocumentModalBtn.on("click", function () {
         modal.css('display', 'none');
         overlay.css('display', 'none');
     })
@@ -179,19 +179,19 @@ function openCollectionModal(database) {
 }
 
 function showAllDataOfCollection(dbname, collectionname) {
-    
+
     // console.log(rowCount,qsort)
-    let rowCount=$('#rowCountSelect').val();
-    if(!rowCount){
-        rowCount=10
+    let rowCount = $('#rowCountSelect').val();
+    if (!rowCount) {
+        rowCount = 10
     }
     let qsort = $('#quicksort').prop('checked');
-// console.log(rowCount, qsort);
+    // console.log(rowCount, qsort);
 
-    if(!qsort){
-        qsort=0;
-    }else{
-        qsort=1;
+    if (!qsort) {
+        qsort = 0;
+    } else {
+        qsort = 1;
     }
     // console.log(rowCount,qsort)
     // debugger
@@ -199,7 +199,7 @@ function showAllDataOfCollection(dbname, collectionname) {
     $.ajax({
         url: `${url}getAllDocumentsByDatabaseAndCollection`,  // Replace with your server-side endpoint
         type: 'POST',
-        data: { dbname: dbname, clname: collectionname,rowCount:rowCount,qsort:qsort},
+        data: { dbname: dbname, clname: collectionname, rowCount: rowCount, qsort: qsort },
         success: function (data) {
             // Handle the successful response
             // $('#allDatabases').html(data);
@@ -216,4 +216,42 @@ function showAllDataOfCollection(dbname, collectionname) {
             console.error('Error:', status, error);
         }
     });
+}
+
+
+
+function addDocument() {
+    // Perform form submission logic here
+    var form = document.getElementById("documentForm");
+    var formData = new FormData(form);
+
+    // Create a JavaScript object to store form data
+    var jsonData = {};
+
+    formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+        // Add key-value pairs to the JavaScript object
+        jsonData[key] = value;
+    });
+
+    // Reset the form or perform other actions as needed
+    // form.reset();
+
+    // Send the form data as JSON to the server using $.ajax
+    $.ajax({
+        url: `${url}addDocument`,
+        type: 'POST',
+        data: JSON.stringify(jsonData),
+        contentType: 'application/json', // Set content type to JSON
+        success: function (data) {
+            // Handle the success response from the server
+            console.log(data);
+        },
+        error: function (error) {
+            // Handle the error
+            console.error('Error:', error);
+        }
+    });
+
+
 }

@@ -211,14 +211,20 @@
 }
 
 
-/* .documentTable {
-  width: 60%;
+.documentTable {
+  /* width: 60%;
   border-collapse: collapse;
-  margin: 20px;
-} */
+  margin: 20px; */
+  height: 400px;
+  overflow-y: auto;
+}
 
 .documentTable, .documentTable th, .documentTable td {
   /* border: 1px solid black; */
+}
+
+#documentModal{
+  margin-top: 100px;
 }
 
 .documentTable th, .documentTable td {
