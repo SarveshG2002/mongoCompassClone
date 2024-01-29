@@ -148,6 +148,19 @@ $(document).ready(function () {
 
 });
 
+function openDocumentModal(){
+    let modal = $('#documentModal');
+    let overlay = $('#documentoverlay');
+    // document.getElementById('modalHead').innerHTML = "Create Database";
+    modal.css('display', 'block');
+    overlay.css('display', 'block');
+    let closedocumentModalBtn = $("#closedocumentModalBtn"); 
+    closedocumentModalBtn.on("click",function(){
+        modal.css('display', 'none');
+        overlay.css('display', 'none');
+    })
+}
+
 function openCreateDatabaseModal() {
     let modal = $('#myModal');
     let overlay = $('#overlay');

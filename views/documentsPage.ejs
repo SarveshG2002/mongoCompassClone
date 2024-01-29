@@ -1,6 +1,6 @@
 <div class="mainNavbar">
     <div class="input">
-        <button style="margin-right: 0px; background-color: green;color: white;">
+        <button style="margin-right: 0px; background-color: green;color: white;" onclick="openDocumentModal()">
             Add new Document
         </button>
 
@@ -73,3 +73,36 @@
         <% }); %>
     <% } %>
 </div>
+
+
+<div class="overlay" id="documentoverlay"></div>
+
+  <div class="modal" id="documentModal">
+    <div class="modal-content">
+      <div class="modal-head collections">
+        <!-- Create Database<span class="close" id="closeModalBtn">&times;</span> -->
+        <h1 id="modalHead">Create Database</h1>
+        <div class="left">
+          <span class="close" id="closedocumentModalBtn">&times;</span>
+
+        </div>
+      </div>
+      <div class="body">
+
+        
+
+        <div class="input">
+          <button style="float:right;margin-right: 0px; background-color: green;color: white;" id="createDatabase">
+            Create Database
+          </button>
+          <button style="float:right; margin-right: 10px;" onclick="$('#closeModalBtn').click()">
+            Cancel
+          </button>
+
+        </div>
+
+        <br>
+
+      </div>
+    </div>
+  </div>
