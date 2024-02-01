@@ -227,12 +227,28 @@ function addDocument() {
 
     // Create a JavaScript object to store form data
     var jsonData = {};
-
+    let keycounter = 0;
+    let valcounter = 0;
+    let ky;
+    let val;
     formData.forEach((value, key) => {
-        console.log(`${key}: ${value}`);
+        // console.log(`${key}: ${value}`);
+        if(keycounter==0){
+            ky=value;
+            keycounter=1
+        }else{
+            jsonData[ky]=value;
+            keycounter=0
+        }
+        
+        
         // Add key-value pairs to the JavaScript object
-        jsonData[key] = value;
+        // jsonData[key] = value;
     });
+
+    // console.log(jsonData);
+
+    
 
     // Reset the form or perform other actions as needed
     // form.reset();
@@ -241,7 +257,7 @@ function addDocument() {
     $.ajax({
         url: `${url}addDocument`,
         type: 'POST',
-        data: JSON.stringify(jsonData),
+        data: JSON.stringify({dbname:$("#dbnameToEnter").val(),cname:$("#cnameToEnter").val(),dataToInsert:jsonData}),
         contentType: 'application/json', // Set content type to JSON
         success: function (data) {
             // Handle the success response from the server

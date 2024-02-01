@@ -394,12 +394,20 @@ app.post('/createDatabaseAndCollection', async (req, res) => {
 
 app.post('/addDocument', async (req, res) => {
     try {
-        console.log(req.body);
+        const { dbname, cname, dataToInsert } = req.body;
 
-        res.send(JSON.stringify(req.body));
+        // Use the specified database and collection
+        const database = mongoose.connection.useDb(dbname);
+        const collection = database.collection(cname);
+
+        // Insert the document into the collection
+        const result = await collection.insertOne(dataToInsert);
+
+        // Respond with the result of the insertion
+        res.json({ success: true });
     } catch (error) {
-        console.error('Error creating database and collection:', error);
-        res.status(500).send('Internal Server Error');
+        console.error('Error adding document:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });
 
