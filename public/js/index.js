@@ -261,7 +261,13 @@ function addDocument() {
         contentType: 'application/json', // Set content type to JSON
         success: function (data) {
             // Handle the success response from the server
-            console.log(data);
+            console.log(data); 
+            if(data.success){
+                $('#closedocumentModalBtn').click()
+                showAllDataOfCollection($("#dbnameToEnter").val(),$("#cnameToEnter").val());
+            }
+            
+            
         },
         error: function (error) {
             // Handle the error

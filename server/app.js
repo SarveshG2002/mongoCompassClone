@@ -407,7 +407,7 @@ app.post('/addDocument', async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         console.error('Error adding document:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+        res.json({ success: false, error: 'Internal Server Error' });
     }
 });
 
